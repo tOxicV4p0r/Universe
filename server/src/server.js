@@ -1,3 +1,4 @@
+const cluster = require('cluster');
 const http = require('http');
 const app = require('./app');
 
@@ -13,4 +14,11 @@ async function startServer() {
     })
 }
 
-startServer();
+console.log('start server as :', cluster.isMaster ? 'master' : 'worker');
+if (cluster.isMaster) {
+    startServer();
+    console.log('master running')
+    cluster.fork();
+} else {
+    console.log('worker is running');
+}
