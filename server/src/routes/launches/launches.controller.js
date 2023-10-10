@@ -1,16 +1,16 @@
 const {
-    launches,
+    // launches,
     getAllLaunches,
     addNewLaunch,
     existLaunchWithId,
     abortLaunchById,
 } = require('../../models/launches.model');
 
-function getLaunches(req, res) {
-    return res.status(200).json(getAllLaunches());
+async function getLaunches(req, res) {
+    return res.status(200).json(await getAllLaunches());
 }
 
-function addLaunch(req, res) {
+async function addLaunch(req, res) {
 
     const launch = req.body;
 
@@ -30,7 +30,7 @@ function addLaunch(req, res) {
         });
     }
 
-    addNewLaunch(launch);
+    await addNewLaunch(launch);
     return res.status(201).json(launch);
 }
 

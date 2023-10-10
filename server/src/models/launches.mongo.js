@@ -34,3 +34,6 @@ const launchesSchema = new mongoose.Schema({
     destination: String,
     customers: [String],
 });
+
+// connect launchesSchema with the "launches" collection
+module.exports = mongoose.model('Launch', launchesSchema);
