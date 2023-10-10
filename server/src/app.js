@@ -20,6 +20,10 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/planets', planetsRouter);
 app.use('/launches', launchesRouter);
 
+app.get('/pid', (req, res) => {
+    return res.status(200).json({ pid: process.pid });
+})
+
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 })
