@@ -30,21 +30,29 @@ async function addLaunch(req, res) {
         });
     }
 
-    await addNewLaunch(launch);
-    return res.status(201).json(launch);
+    try {
+        await addNewLaunch(launch);
+        return res.status(201).json(launch);
+    } catch (err) {
+        return res.status(400).json({ error: err });
+    }
 }
 
-function abortLaunch(req, res) {
+async function abortLaunch(req, res) {
     console.log(req.params);
     const launchId = req.params.id * 1;
 
     // doesn't exist
-    if (!existLaunchWithId(launchId)) {
+    if (!(await existLaunchWithId(launchId))) {
         return res.status(404).json({ error: 'Launch not found' });
     }
 
     // exist
-    const aborted = abortLaunchById(launchId);
+    const aborted = await abortLaunchById(launchId);
+
+    if (!aborted)
+        return res.status(400).json({ error: 'Launch can not abort' });
+
     return res.status(200).json(aborted);
 }
 
