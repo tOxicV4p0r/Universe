@@ -1,18 +1,23 @@
 // const cluster = require('cluster');
-const http = require('http');
+const fs = require('fs')
+const path = require('path');
+const https = require('https');
 require('dotenv').config();
 const { mongoConnect } = require('./services/mongo');
 
 const { loadPlanetData } = require('./models/planets.model');
 const { loadLaunchData } = require('./models/launches.model');
 
-const PORT = process.env.PORT*1 || 5000;
+const PORT = process.env.PORT * 1 || 5000;
 
 async function startServer() {
     await mongoConnect();
 
     const app = require('./app');
-    const server = http.createServer(app);
+    const server = https.createServer({
+        key: fs.readFileSync(path.join(__dirname, '..', 'key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, '..', 'cert.pem')),
+    }, app);
 
     await loadPlanetData();
     await loadLaunchData();
