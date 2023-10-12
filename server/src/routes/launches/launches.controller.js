@@ -1,17 +1,21 @@
 const {
     // launches,
     getAllLaunches,
-    addNewLaunch,
+    scheduleNewLaunch,
     existLaunchWithId,
     abortLaunchById,
 } = require('../../models/launches.model');
+const {
+    getPagination,
+} = require('../../services/query');
 
 async function getLaunches(req, res) {
-    return res.status(200).json(await getAllLaunches());
+    console.log(req.query);
+    const { skip, limit } = getPagination(req.query);
+    return res.status(200).json(await getAllLaunches(skip, limit));
 }
 
 async function addLaunch(req, res) {
-
     const launch = req.body;
 
     if (!launch.mission || !launch.rocket || !launch.launchDate
@@ -31,7 +35,7 @@ async function addLaunch(req, res) {
     }
 
     try {
-        await addNewLaunch(launch);
+        await scheduleNewLaunch(launch);
         return res.status(201).json(launch);
     } catch (err) {
         return res.status(400).json({ error: err });
