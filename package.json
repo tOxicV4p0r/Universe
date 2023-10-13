@@ -9,7 +9,7 @@
     "watch": "npm run server & npm run client",
     "install-all":"npm install --prefix client && npm install --prefix server",
     "deploy": "npm run build --prefix client && npm start --prefix server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm test --prefix server"
   },
   "keywords": [],
   "author": "",

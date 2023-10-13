@@ -26,7 +26,7 @@ function verifyCallback(accessToken, refreshToken, profile, done) {
     console.log('Google profile', profile);
     done(null, profile);
 }
-
+/*
 passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
 // save session to cookie
@@ -43,9 +43,9 @@ passport.deserializeUser((obj, done) => {
     console.log(obj);
     done(null, obj);
 });
-
+*/
 const app = express();
-
+/*
 function checkLoggedIn(req, res, next) {
     console.log('user :', req.user);
     // const isLoggedIn = req.user; // or req.isAuthenticated
@@ -58,13 +58,14 @@ function checkLoggedIn(req, res, next) {
     }
     next();
 }
-
+*/
 app.use(cors({
     origin: 'http://localhost:3000',
 }));
 
 app.use(morgan('combined'));
 app.use(helmet());
+/*
 app.use(cookieSession({
     name: 'session',
     maxAge: 12 * 60 * 60 * 1000,
@@ -72,10 +73,10 @@ app.use(cookieSession({
 })) // set before initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
-
+*/
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
-
+/*
 app.get('/auth/google',
     passport.authenticate('google', {
         scope: ['email']
@@ -101,9 +102,9 @@ app.get('/auth/logout', (req, res) => {
     req.logout(); // removes req.user , terminate or clears any logged in session
     return res.redirect('/');
 });
-
+*/
 app.use('/v1', api);
-
+/*
 app.get('/secret', checkLoggedIn, (req, res) => {
     return res.status(200).send('This is secret page');
 });
@@ -114,7 +115,7 @@ app.get('/failure', (req, res) => {
 app.get('/pid', (req, res) => {
     return res.status(200).json({ pid: process.pid });
 });
-
+*/
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
